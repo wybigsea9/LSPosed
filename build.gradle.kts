@@ -71,13 +71,17 @@ val androidMinSdkVersion by extra(27)
 val androidBuildToolsVersion by extra("34.0.0")
 val androidCompileSdkVersion by extra(34)
 val androidCompileNdkVersion by extra("26.1.10909125")
-val androidSourceCompatibility by extra(JavaVersion.VERSION_21)
-val androidTargetCompatibility by extra(JavaVersion.VERSION_21)
+val androidSourceCompatibility by extra(JavaVersion.VERSION_17)
+val androidTargetCompatibility by extra(JavaVersion.VERSION_17)
 
 tasks.register("Delete", Delete::class) {
     delete(rootProject.layout.buildDirectory)
 }
-
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) 
+    }
+}
 subprojects {
     plugins.withType(AndroidBasePlugin::class.java) {
         extensions.configure(CommonExtension::class.java) {
