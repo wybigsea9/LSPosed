@@ -40,6 +40,10 @@ jobs:
             echo ${{ secrets.KEY_STORE }} | base64 --decode > key.jks
           fi
 
+      - name: Clean Gradle cache and build
+        run: ./gradlew clean build --no-daemon --refresh-dependencies
+
+
       - name: Checkout libxposed/api
         uses: actions/checkout@v3
         with:
@@ -70,6 +74,9 @@ jobs:
           key: ${{ runner.os }}
           restore-keys: ${{ runner.os }}
           save: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+
+      - name: Check Java Version
+        run: java -version
 
       - name: Build dependencies
         working-directory: libxposed
@@ -154,5 +161,4 @@ jobs:
             export riruDebug=$(find $OUTPUT -name "LSPosed-v*-riru-debug.zip")
             export zygiskRelease=$(find $OUTPUT -name "LSPosed-v*-zygisk-release.zip")
             export zygiskDebug=$(find $OUTPUT -name "LSPosed-v*-zygisk-debug.zip")
-            # curl -v "https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup?chat_id=${DISCUSSION_ID}&message_thread_id=${TOPIC_ID}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2FriruRelease%22%7D%2C%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2FzygiskRelease%22%7D%2C%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2FriruDebug%22%7D%2C%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2FzygiskDebug%22%2C%22caption%22:${ESCAPED}%7D%5D" -F riruRelease="@$riruRelease" -F riruDebug="@$riruDebug" -F zygiskRelease="@$zygiskRelease" -F zygiskDebug="@$zygiskDebug"
           fi
