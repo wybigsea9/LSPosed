@@ -121,4 +121,7 @@ subprojects {
             targetCompatibility = androidTargetCompatibility
         }
     }
+    tasks.withType<KotlinCompile>().configureEach {
+        kotlinOptions.jvmTarget = "17" 
+    }
 }
