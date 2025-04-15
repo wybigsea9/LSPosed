@@ -77,11 +77,7 @@ val androidTargetCompatibility by extra(JavaVersion.VERSION_21)
 tasks.register("Delete", Delete::class) {
     delete(rootProject.layout.buildDirectory)
 }
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17) 
-    }
-}
+
 subprojects {
     plugins.withType(AndroidBasePlugin::class.java) {
         extensions.configure(CommonExtension::class.java) {
@@ -121,7 +117,5 @@ subprojects {
             targetCompatibility = androidTargetCompatibility
         }
     }
-    tasks.withType<KotlinCompile>().configureEach {
-        kotlinOptions.jvmTarget = "21" 
-    }
+
 }
