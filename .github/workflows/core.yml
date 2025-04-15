@@ -60,7 +60,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "21"
       - name: Set GRADLE_OPTS to use JDK 17
         run: |
           export GRADLE_OPTS="-Dorg.gradle.java.home=$(dirname $(dirname $(readlink -f $(which java))))"
